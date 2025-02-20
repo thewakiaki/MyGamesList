@@ -1,20 +1,20 @@
 import re
-import django.utils.timezone; import datetime
+from django.utils.timezone import datetime
 from django.http import HttpResponse
+from django.shortcuts import render
 
 def home(request):
     return HttpResponse("Hello, Django!")
 
 def test_code(request, name):
-    now = datetime.datetime.now()
-    formatted_now = now.strftime("%A, %d, %B, %Y at %x")
+    print(request.build_absolute_uri())
     
-    match_object = re.match("[a-zA-Z]+", name)
-    
-    if match_object:
-        clean_name = match_object.group(0)
-    else:
-        clean_name = "Friend"
-        
-    content = "Hello there, " + clean_name + "! It's " + formatted_now
-    return HttpResponse(content)
+    return render(
+        request, 
+        'Games_List/test.html', 
+        {
+            'name' : name,
+            'date' : datetime.now()
+            
+        }
+    )
